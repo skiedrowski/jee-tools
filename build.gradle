@@ -1,0 +1,71 @@
+buildscript {
+	ext.kotlin_version = '1.2.21'
+
+	repositories {
+		mavenCentral()
+	}
+
+	dependencies {
+		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+	}
+}
+
+description = """Java EE tools"""
+
+def buildscriptDir = "$rootProject.projectDir/buildscripts"
+
+apply from: "$buildscriptDir/loadEnvironment.gradle"
+apply from: "$buildscriptDir/printGradleInfo.gradle"
+apply from: "$buildscriptDir/loadVersions.gradle"
+apply from: "$buildscriptDir/jacocoMultimodule.gradle"
+
+subprojects {
+	apply plugin: 'kotlin'
+
+	tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+		kotlinOptions {
+			apiVersion = "1.2"
+			languageVersion = "1.2"
+			//default suppressWarnings = false
+			//default verbose = false
+			jvmTarget = "1.8"
+			noReflect = true
+			noStdlib = true
+		}
+	}
+
+	version = '0.1'
+	group = "com.github.skiedrowski.tools.jee"
+
+	repositories {
+		mavenCentral()
+		maven { url "https://dl.bintray.com/skiedrowski/maven" }
+	}
+
+	dependencies {
+		compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+		compileOnly "javax:javaee-api:$ver.javaee"
+
+		testCompile "junit:junit:$ver.junit"
+		testCompile "com.nhaarman:mockito-kotlin:$ver.mockito_kotlin"
+		// kotlin-reflect is (just) used by mockito-kotlin
+		testCompile "org.jetbrains.kotlin:kotlin-reflect"
+		testCompile "com.natpryce:hamkrest:$ver.hamkrest"
+		testCompile("org.mockito:mockito-core:$ver.mockito") {
+			exclude group: "org.hamcrest"
+		}
+		//provides several implementations of apis with compileOnly dependencies
+		testCompile "fish.payara.extras:payara-embedded-all:$ver.payara"
+	}
+
+	apply from: "$buildscriptDir/sourcesJar.gradle"
+	apply from: "$buildscriptDir/testJar.gradle"
+	apply from: "$buildscriptDir/javadocJar.gradle"
+
+	test.maxParallelForks = Runtime.runtime.availableProcessors()
+
+	apply from: "$buildscriptDir/ignoreTestFailuresIfConfiguredInEnv.gradle"
+	apply from: "$buildscriptDir/mavenPublish.gradle"
+}
+apply from: "$buildscriptDir/fixJenkins.gradle"
+apply from: "$buildscriptDir/wrapper.gradle"
