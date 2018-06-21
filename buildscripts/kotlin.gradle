@@ -1,6 +1,6 @@
 //TODO the following needs to be put into build.gradle
 //buildscript {
-//	ext.kotlin_version = '1.2.0'
+//	ext.kotlin_version = '1.2.41'
 //
 //	repositories {
 //		mavenCentral()
@@ -24,6 +24,7 @@
 
 
 //http://kotlinlang.org/docs/reference/using-gradle.html#using-gradle
+//http://kotlinlang.org/docs/reference/compiler-plugins.html
 
 apply plugin: 'kotlin'
 
