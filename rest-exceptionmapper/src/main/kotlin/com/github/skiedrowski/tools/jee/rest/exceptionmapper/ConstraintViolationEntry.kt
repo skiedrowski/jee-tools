@@ -1,5 +1,6 @@
 package com.github.skiedrowski.tools.jee.rest.exceptionmapper
 
+import javax.json.bind.annotation.JsonbPropertyOrder
 import javax.validation.ConstraintViolation
 import javax.xml.bind.annotation.XmlAccessType
 import javax.xml.bind.annotation.XmlAccessorType
@@ -7,10 +8,11 @@ import javax.xml.bind.annotation.XmlRootElement
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
+@JsonbPropertyOrder("fieldName", "wrongValue", "errorMessage")
 class ConstraintViolationEntry(
-    val fieldName: String,
-    val wrongValue: String,
-    val errorMessage: String
+    var fieldName: String = "", //default value for Jsonb
+    var wrongValue: String = "", //default value for Jsonb
+    var errorMessage: String = "" //default value for Jsonb
 ) {
 
     companion object {

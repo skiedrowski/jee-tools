@@ -33,7 +33,6 @@ class ConstraintViolationMapper : ExceptionMapper<ConstraintViolationException> 
         return Response.status(Response.Status.EXPECTATION_FAILED)
             .header("cause", "Validation failed")
             .entity(entity)
-//                .type(MediaType.APPLICATION_JSON_TYPE)
             .build()
     }
 }
