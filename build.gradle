@@ -69,7 +69,8 @@ subprojects {
 	test.maxParallelForks = Runtime.runtime.availableProcessors()
 
 	apply from: "$buildscriptDir/ignoreTestFailuresIfConfiguredInEnv.gradle"
-	apply from: "$buildscriptDir/mavenPublishGithubPackages.gradle"
+//	apply from: "$buildscriptDir/mavenPublishGithubPackages.gradle"
+	apply from: "$buildscriptDir/mavenPublish.gradle"
 }
 apply from: "$buildscriptDir/fixJenkins.gradle"
 apply from: "$buildscriptDir/wrapper.gradle"

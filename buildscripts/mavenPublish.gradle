@@ -15,11 +15,12 @@
 // duplicate the properties and further complicate the usage. Let us wait for the use case ;-).
 //
 
-apply plugin: 'maven-publish'
-
 publishing {
 	publications {
 		mavenJava(MavenPublication) {
+			groupId = project.group
+			version = project.version
+
 			from components.java
 
 			artifact jarTestClasses {
