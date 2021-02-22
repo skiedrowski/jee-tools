@@ -37,8 +37,8 @@ subprojects {
 		}
 	}
 
-//	version = 'NEXT-SNAPSHOT'
-	version = '20210222'
+	version = 'NEXT-SNAPSHOT'
+//	version = '20210222'
 
 	group = "com.github.skiedrowski.tools.jee"
 
