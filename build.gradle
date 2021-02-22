@@ -9,6 +9,9 @@ buildscript {
 		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 	}
 }
+plugins {
+	id("maven-publish")
+}
 
 description = """Java EE tools"""
 
@@ -34,13 +37,13 @@ subprojects {
 		}
 	}
 
-	version = 'NEXT-SNAPSHOT'
-//	version = '20190311'
+//	version = 'NEXT-SNAPSHOT'
+	version = '20210222'
+
 	group = "com.github.skiedrowski.tools.jee"
 
 	repositories {
 		mavenCentral()
-		maven { url "https://dl.bintray.com/skiedrowski/maven" }
 	}
 
 	dependencies {
@@ -66,7 +69,7 @@ subprojects {
 	test.maxParallelForks = Runtime.runtime.availableProcessors()
 
 	apply from: "$buildscriptDir/ignoreTestFailuresIfConfiguredInEnv.gradle"
-	apply from: "$buildscriptDir/mavenPublish.gradle"
+	apply from: "$buildscriptDir/mavenPublishGithubPackages.gradle"
 }
 apply from: "$buildscriptDir/fixJenkins.gradle"
 apply from: "$buildscriptDir/wrapper.gradle"
