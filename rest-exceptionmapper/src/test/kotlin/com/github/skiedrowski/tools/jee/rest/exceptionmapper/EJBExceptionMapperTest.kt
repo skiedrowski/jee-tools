@@ -1,11 +1,9 @@
 package com.github.skiedrowski.tools.jee.rest.exceptionmapper
 
-import com.natpryce.hamkrest.assertion.assertThat
-import com.natpryce.hamkrest.equalTo
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.doReturn
-import com.nhaarman.mockito_kotlin.mock
-import org.junit.Test
+import io.kotest.matchers.shouldBe
+import io.mockk.every
+import io.mockk.mockk
+import org.junit.jupiter.api.Test
 import javax.ejb.EJBException
 import javax.persistence.OptimisticLockException
 import javax.validation.ConstraintViolationException
@@ -16,54 +14,65 @@ class EJBExceptionMapperTest {
 
     @Test
     fun `cause ConstraintViolationException`() {
-        val expectedResponse = mock<Response>()
+        val expectedResponse = mockk<Response>()
         val ejbExceptionMapper = object : EJBExceptionMapper() {
             override val constraintViolationExceptionMapper: ConstraintViolationMapper
-                get() = mock { on { this.toResponse(any()) } doReturn expectedResponse }
+                get() {
+                    val constraintViolationMapper = mockk<ConstraintViolationMapper>()
+                    every { constraintViolationMapper.toResponse(any()) } returns expectedResponse
+                    return constraintViolationMapper
+                }
         }
 
-        val ex = EJBException(mock<ConstraintViolationException>())
+        val ex = EJBException(mockk<ConstraintViolationException>())
         val response = ejbExceptionMapper.toResponse(ex)
 
-        assertThat(response, equalTo(expectedResponse))
+        response shouldBe expectedResponse
     }
 
     @Test
     fun `cause EJBException nested`() {
-        val expectedResponse = mock<Response>()
+        val expectedResponse = mockk<Response>()
         val ejbExceptionMapper = object : EJBExceptionMapper() {
             override val ejbExceptionMapper: EJBExceptionMapper
-                get() = mock { on { this.toResponse(any()) } doReturn expectedResponse }
+                get() {
+                    val ejbExceptionMapper = mockk<EJBExceptionMapper>()
+                    every { ejbExceptionMapper.toResponse(any()) } returns expectedResponse
+                    return ejbExceptionMapper
+                }
         }
 
-        val ex = EJBException(mock<EJBException>())
+        val ex = EJBException(mockk<EJBException>())
         val response = ejbExceptionMapper.toResponse(ex)
 
-        assertThat(response, equalTo(expectedResponse))
+        response shouldBe expectedResponse
     }
 
     @Test
     fun `cause OptimisticLockException`() {
-        val expectedResponse = mock<Response>()
+        val expectedResponse = mockk<Response>()
         val ejbExceptionMapper = object : EJBExceptionMapper() {
             override val optimisticLockExceptionMapper: OptimisticLockExceptionMapper
-                get() = mock { on { this.toResponse(any()) } doReturn expectedResponse }
+                get() {
+                    val optimisticLockExceptionMapper = mockk<OptimisticLockExceptionMapper>()
+                    every { optimisticLockExceptionMapper.toResponse(any()) } returns expectedResponse
+                    return optimisticLockExceptionMapper
+                }
         }
 
-        val ex = EJBException(mock<OptimisticLockException>())
+        val ex = EJBException(mockk<OptimisticLockException>())
         val response = ejbExceptionMapper.toResponse(ex)
 
-        assertThat(response, equalTo(expectedResponse))
+        response shouldBe expectedResponse
     }
 
     @Test
     fun `cause registered Exception`() {
-        val npe = mock<NullPointerException>()
-        val expResponse = mock<Response>()
+        val npe = mockk<NullPointerException>()
+        val expResponse = mockk<Response>()
 
-        val npeHandlerMock = mock<ExceptionMapper<NullPointerException>>() {
-            on { this.toResponse(npe) } doReturn expResponse
-        }
+        val npeHandlerMock = mockk<ExceptionMapper<NullPointerException>>()
+        every { npeHandlerMock.toResponse(npe) } returns expResponse
         EJBExceptionMapperRegistration.register(NullPointerException::class.java, npeHandlerMock)
 
         val ejbExceptionMapper = EJBExceptionMapper()
@@ -71,19 +80,18 @@ class EJBExceptionMapperTest {
         val ex = EJBException(npe)
         val response = ejbExceptionMapper.toResponse(ex)
 
-        assertThat(response, equalTo(expResponse))
+        response shouldBe expResponse
     }
 
     @Test
     fun `cause _other_ exception`() {
         val ejbExceptionMapper = EJBExceptionMapper()
 
-        val ex = EJBException(mock<IllegalArgumentException>())
+        val ex = EJBException(mockk<IllegalArgumentException>())
         val response = ejbExceptionMapper.toResponse(ex)
 
-        assertThat(response.status, equalTo(Response.Status.INTERNAL_SERVER_ERROR.statusCode))
-        assertThat(response.getHeaderString("cause"), equalTo(ex.toString()))
-
+        response.status shouldBe Response.Status.INTERNAL_SERVER_ERROR.statusCode
+        response.getHeaderString("cause") shouldBe ex.toString()
     }
 
 }

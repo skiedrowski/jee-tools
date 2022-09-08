@@ -11,7 +11,6 @@ object EJBExceptionMapperRegistration {
     }
 
     fun <T : Throwable> buildResponse(excClass: Class<T>, ex: T): Response? {
-        //TODO understand type projections
         val exceptionMapper = registeredExceptionMappers[excClass] as ExceptionMapper<Throwable>?
         return exceptionMapper?.toResponse(ex)
     }
