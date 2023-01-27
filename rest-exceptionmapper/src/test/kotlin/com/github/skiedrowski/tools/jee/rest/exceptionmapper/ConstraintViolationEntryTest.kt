@@ -4,9 +4,9 @@ import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Test
-import javax.json.bind.JsonbBuilder
-import javax.validation.ConstraintViolation
-import javax.validation.Path
+import jakarta.json.bind.JsonbBuilder
+import jakarta.validation.ConstraintViolation
+import jakarta.validation.Path
 
 class ConstraintViolationEntryTest {
     @Test

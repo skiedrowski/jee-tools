@@ -1,11 +1,11 @@
 package com.github.skiedrowski.tools.jee.rest.exceptionmapper
 
-import javax.ejb.EJBException
-import javax.persistence.OptimisticLockException
-import javax.validation.ConstraintViolationException
-import javax.ws.rs.core.Response
-import javax.ws.rs.ext.ExceptionMapper
-import javax.ws.rs.ext.Provider
+import jakarta.ejb.EJBException
+import jakarta.persistence.OptimisticLockException
+import jakarta.validation.ConstraintViolationException
+import jakarta.ws.rs.core.Response
+import jakarta.ws.rs.ext.ExceptionMapper
+import jakarta.ws.rs.ext.Provider
 
 @Provider
 open class EJBExceptionMapper : ExceptionMapper<EJBException> {

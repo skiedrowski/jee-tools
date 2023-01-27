@@ -6,8 +6,8 @@ import io.mockk.mockk
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
 import java.time.Month
-import javax.persistence.OptimisticLockException
-import javax.ws.rs.core.Response
+import jakarta.persistence.OptimisticLockException
+import jakarta.ws.rs.core.Response
 
 class OptimisticLockExceptionMapperTest {
     @Test

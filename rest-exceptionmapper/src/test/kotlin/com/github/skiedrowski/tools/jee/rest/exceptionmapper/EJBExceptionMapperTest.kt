@@ -4,11 +4,11 @@ import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Test
-import javax.ejb.EJBException
-import javax.persistence.OptimisticLockException
-import javax.validation.ConstraintViolationException
-import javax.ws.rs.core.Response
-import javax.ws.rs.ext.ExceptionMapper
+import jakarta.ejb.EJBException
+import jakarta.persistence.OptimisticLockException
+import jakarta.validation.ConstraintViolationException
+import jakarta.ws.rs.core.Response
+import jakarta.ws.rs.ext.ExceptionMapper
 
 class EJBExceptionMapperTest {
 

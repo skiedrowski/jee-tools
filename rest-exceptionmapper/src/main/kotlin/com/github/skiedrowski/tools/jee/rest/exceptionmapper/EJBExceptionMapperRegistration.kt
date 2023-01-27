@@ -1,7 +1,7 @@
 package com.github.skiedrowski.tools.jee.rest.exceptionmapper
 
-import javax.ws.rs.core.Response
-import javax.ws.rs.ext.ExceptionMapper
+import jakarta.ws.rs.core.Response
+import jakarta.ws.rs.ext.ExceptionMapper
 
 object EJBExceptionMapperRegistration {
     private val registeredExceptionMappers = mutableMapOf<Class<out Throwable>, ExceptionMapper<out Throwable>>()

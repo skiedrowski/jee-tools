@@ -1,10 +1,10 @@
 package com.github.skiedrowski.tools.jee.rest.exceptionmapper
 
-import javax.json.bind.annotation.JsonbPropertyOrder
-import javax.validation.ConstraintViolation
-import javax.xml.bind.annotation.XmlAccessType
-import javax.xml.bind.annotation.XmlAccessorType
-import javax.xml.bind.annotation.XmlRootElement
+import jakarta.json.bind.annotation.JsonbPropertyOrder
+import jakarta.validation.ConstraintViolation
+import jakarta.xml.bind.annotation.XmlAccessType
+import jakarta.xml.bind.annotation.XmlAccessorType
+import jakarta.xml.bind.annotation.XmlRootElement
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
