@@ -1,7 +1,7 @@
 //define prior to mvnpublish plugin config!
 group = "com.github.skiedrowski.tools.jee"
 //version = "NEXT-SNAPSHOT"
-version = "20220905-jee10"
+version = "20220905.3-jee10"
 
 plugins {
     id("aspect.java11")
